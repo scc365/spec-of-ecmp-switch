@@ -1,4 +1,4 @@
-# Coursework: ECMP Switch (load balancer)
+# Coursework: ECMP Switch [load balancer]
 
 In this coursework you will be expected to produce:
   - A Mininet topology conforming to a given description
@@ -112,7 +112,9 @@ unused functions that will help you with this coursework task. Your solution is
 not require to user the provided API, but the functions can help you to better
 organize your code. 
 
-### Task 1: The Topology | (`20 marks`)
+### Task 1: The Topology
+
+[**20 marks**]
 
 > 📚 Complete the [Mininet Tutorial](https://github.com/scc365/tutorial-mininet)
 > before starting this task!
@@ -159,10 +161,11 @@ task, 3 ports on datapath `s2` link to `s1`, and so should be grouped into a
 virtual port.
 
 The file should be named `vports.json` and take the format:
+
 ```json
 {
   "<datapath id>": {
-    "<virtual port name>": [<physical port numbers>]
+    "<virtual port name>": []
   }
 }
 ```
@@ -187,11 +190,13 @@ You can manually create the `vports.json` file contents, or you can use the
 `vports.py` tool provided in the template. Use this tool with the `--custom` and
 `--topo` flags you would use with `mn`, for example:
 
-```
+```bash
 python3 vports.py --custom ./topology.py --topo tutorialTopology
 ```
 
-### Task 2: Safe Flooding | (`40 marks`)
+### Task 2: Safe Flooding
+
+[**40 marks**]
 
 > 📚 Complete the [Ryu Tutorial](https://github.com/scc365/tutorial-ryu) before
 > starting this task!
@@ -205,9 +210,9 @@ storms are a common symptom of unchecked loops, often monopolizing all the
 resources in a network. Protocols such as the Spanning Tree Protocol (STP) can
 remove these problems, however do prevent devices from exploiting the benefits
 that redundant links may offer.  The topology created [task
-1](#task-1-the-topology--20-marks) does have redundant links that can cause the
+1](#task-1-the-topology) does have redundant links that can cause the
 above-mentioned issues. Luckily however, the `vports.json` file also produced in
-[task 1](#task-1-the-topology--20-marks) along with datapath port description
+[task 1](#task-1-the-topology) along with datapath port description
 [requests](https://ryu.readthedocs.io/en/latest/ofproto_v1_3_ref.html#ryu.ofproto.ofproto_v1_3_parser.OFPPortDescStatsRequest)
 and
 [responses](https://ryu.readthedocs.io/en/latest/ofproto_v1_3_ref.html#ryu.ofproto.ofproto_v1_3_parser.OFPPortDescStatsReply)
@@ -225,7 +230,9 @@ At this point, your controller should work as an L2L switch, it will be
 acceptable to use a single forwarding path between two end-points, even if
 redundant links exist between switches. 
 
-### Task 3: ECMP Forwarding | (`20 marks`)
+### Task 3: ECMP Forwarding
+
+[**20 marks**]
 
 Although safe flooding can forward traffic across a network with redundant
 links, end-hosts cannot exploit any performance gains from it. To increase
@@ -247,7 +254,9 @@ This approach to implement load balancing can also be optimized using Flow Table
 modifications (Flow Mods). Specifically, the relevant Flow Table entries will
 apply packet forwarding decision in the data plane.
 
-### Task 4: RESTful Management API | (`20 marks`)
+### Task 4: RESTful Management API
+
+[**20 marks**]
 
 SDN technologies improve the interoperability of the network with other software
 entities. This does however require the controller to expose functions or
@@ -292,7 +301,7 @@ in the `ControllerAPI` class. These are as follows:
       - **dpid**: The datapath ID for the mappings table desired (in full)
     - **returned fields**:
       - **mac address**: The MAC address with its associated port number
-    > 🆘 This can return an error. See the code for more details...
+    - **error**: This can return an error. See the code for more details...
 
 For this task, expand the functionality of the given API by adding the following
 endpoints:
@@ -315,7 +324,7 @@ endpoints:
       - **dpid**: The datapath ID for the `vports` table desired (in full)
     - **returned fields**:
       - **mac address**: The MAC address with its associated port number
-    > 🆘 This should return an error if the datapath does not exist
+    - **error**: This should return an error if the datapath does not exist
 
   - **route**: `/api/ports/{dpid}/{port}/stats` 
     - **method**: GET 
@@ -329,7 +338,7 @@ endpoints:
       - **rxPackets**: The number of packets received via this port
       - **txBytes**: The number of bytes transmitted via this port
       - **rxBytes**: The number of bytes received via this port
-    > 🆘 This should return an error if the datapath or port does not exist
+    - **error**: This should return an error if the datapath or port does not exist
 
   - **route**: `/api/virtualports/{dpid}/{vport}/stats` 
     - **method**: GET
@@ -343,7 +352,7 @@ endpoints:
       - **rxPackets**: The number of packets received via this vport
       - **txBytes**: The number of bytes transmitted via this vport
       - **rxBytes**: The number of bytes received via this vport
-    > 🆘 This should return an error if the datapath or vport does not exist
+    - **error**: This should return an error if the datapath or vport does not exist
 
 You should follow typical REST guidelines for these endpoints, for example,
 using a vaguely correct (`400`, `500`) error code with error responses, along
