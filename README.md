@@ -273,7 +273,7 @@ in the `ControllerAPI` class. These are as follows:
     - **path params**: N/A 
     - **returned fields**:
       - **class**: The name of the Python class that is the controller
-      - **functions**: A list of available functions within that class
+      - **functions** (`list`): A list of available functions within that class
 
 
   - **route**: `/api/datapaths` 
@@ -289,8 +289,8 @@ in the `ControllerAPI` class. These are as follows:
     - **description**: Find out what layer 2 mappings have been created thus far 
     - **path params**: N/A 
     - **returned fields**:
-      - **datapath id**: The datapath ID with it's associated mappings
-        - **mac address**: The MAC address with its associated port number
+      - **datapath id** (`list`): The datapath ID with it's associated mappings
+        - **mac address** (`list`): The MAC address with its associated port number
 
 
   - **route**: `/api/mappings/{dpid}` 
@@ -300,7 +300,7 @@ in the `ControllerAPI` class. These are as follows:
     - **path params**: 
       - **dpid**: The datapath ID for the mappings table desired (in full)
     - **returned fields**:
-      - **mac address**: The MAC address with its associated port number
+      - **mac address** (`list`): The MAC address with its associated port number
     - **error**: This can return an error. See the code for more details...
 
 For this task, expand the functionality of the given API by adding the following
@@ -312,8 +312,8 @@ endpoints:
       file, exactly as read from the file 
     - **path params**: N/A 
     - **returned fields**:
-      - **datapath id**: The datapath ID with it's associated vports
-        - **vport name**: The name of the vport with its associated physical
+      - **datapath id** (`list`): The datapath ID with it's associated vports
+        - **vport name** (`list`): The name of the vport with its associated physical
           port number list
   
   - **route**: `/api/virtualports/{dpid}` 
@@ -323,7 +323,8 @@ endpoints:
     - **path params**: 
       - **dpid**: The datapath ID for the `vports` table desired (in full)
     - **returned fields**:
-      - **mac address**: The MAC address with its associated port number
+      - **vport name** (`list`): The name of the vport with its associated physical
+          port number list 
     - **error**: This should return an error if the datapath does not exist
 
   - **route**: `/api/ports/{dpid}/{port}/stats` 
